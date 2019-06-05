@@ -1,0 +1,66 @@
+
+html {
+  overflow: auto;
+  display: grid;
+  grid-row-gap: 50px;
+}
+
+#claudia {
+  height:50%;
+  width:100%;
+  display:table;
+  font-size: 50px;
+  text-align: center;
+  position: absolute;
+  padding: 10px
+  top: 80%;
+  font-family:sans-serif;
+}
+
+#you {
+  height: 50%;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+}
+
+#you input {
+  top: 50%;
+  position: absolute;
+  left: 35%;
+  border: none;
+  border-bottom: 2px solid black;
+  width: 30%;
+  padding: 5px;
+  font-size: 25px;
+}
+
+#bottom {
+  display: none;
+}
+
+.panels {
+  width: 32.33%;
+  height: 100px;
+  float: left;
+  margin: 5px;
+}
+
+.panels p {
+  text-align: center;
+}
+
+
+.slide-fade-enter-to {
+  transform: translateX(10px);
+  opacity: 100;
+}
+
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}

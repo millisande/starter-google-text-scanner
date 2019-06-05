@@ -1,0 +1,27 @@
+{
+  "name": "starter-google-text-scanner",
+  "version": "1.0.0",
+  "description": "An app which shows how to use a server to host a Vue webpage",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/millisande/starter-google-text-scanner.git"
+  },
+  "author": "Millisande Bath",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/millisande/starter-google-text-scanner/issues"
+  },
+  "homepage": "https://github.com/millisande/starter-google-text-scanner#readme",
+  "dependencies": {
+    "@google-cloud/vision": "^1.1.0",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.16.1"
+  }
+}

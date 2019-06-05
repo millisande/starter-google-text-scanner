@@ -7,11 +7,18 @@ require('dotenv').config();
 const express = require("express")
 let session = require('express-session');
 
-//I have commented this out as for the time being we will use Google API services and not IBM's
-//const watson = require("watson-developer-cloud");
+// Imports the Google Cloud client library which lets us do Google AI API calls more easily
+const vision = require('@google-cloud/vision');
+//and this sets up that we want to use the image detection APIs
+const client = new vision.ImageAnnotatorClient();
 
 //This is to allow the messages we get back from an API call to be read more easily by a human
 let bodyParser=require("body-parser");
+
+//This sets up your server so you can refer to it later in the code
+const  app = express();
+//const  appEnv = cfenv.getAppEnv();
+
 
 //if you are hosting this on the cloud a file called .env with your passwords in won't work
 //this piece of code will check if you are running your app on your computer or from a computer in the cloud
@@ -26,24 +33,17 @@ else {
   VCAP_SERVICES = false
 }
 
+//Run this in command line first
+//export GOOGLE_APPLICATION_CREDENTIALS="service.json"
 
-//this will need to change depending on...
-var wa_api_key
-
-if (VCAP_SERVICES){
-  wa_api_key = VCAP_SERVICES.conversation[0].credentials.apikey
-}
-else {
-  wa_api_key = process.env.ASSISTANT_API_KEY
-}
-
-
+/*
 //this will need to change to be google
 var assistant = new watson.AssistantV1({
   iam_apikey: wa_api_key,
   url: "https://gateway-lon.watsonplatform.net/assistant/api",
   version: "2018-09-20"
 });
+*/
 
 //this says that we can use some additional pages to display info that our app can then get
 //e.g. you want to do an API call to google to ask google what text is in an image?
@@ -59,6 +59,7 @@ router.use(bodyParser.json());
 
 //this is where we say which webpage the front end will try to get data from and what to do if the front end requests it.
 //this is where you need to tell the server to do an API call
+/*
 router.post('/conversation', (req, res) => {
    const input = req.body;
    console.log("attempting call to watson assistant")
@@ -72,7 +73,28 @@ router.post('/conversation', (req, res) => {
      }
    })
  });
+*/
 
+const fileName = 'image.jpg';
+
+// Read a local image as a text document
+router.post('/detect', function(req, res) {
+  client
+  .documentTextDetection(fileName)
+  .then (function (results) {
+    console.log(result.fullTextAnnotation.text)
+    res.status(200).send("It's done")
+  })
+  .catch(function (err) {
+    console.log(err)
+    res.status(400).send("error")
+  })
+  /*
+  const [result] = await client.documentTextDetection(fileName);
+  const fullTextAnnotation = result.fullTextAnnotation;
+  console.log(`Full text: ${fullTextAnnotation.text}`);
+  */
+})
 
 
 // //This just to add all the web pages that your front end may request to your app
