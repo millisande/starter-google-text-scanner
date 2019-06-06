@@ -3,11 +3,10 @@ var app = new Vue({
   data: {
     message: 'Hello Vue!'
   },
-  computed: {
-    detectText: async function() {
+  async mounted() {
       var result = await fetch('/detect');
+      result = await result.json()
       console.log(result);
       this.message = result
     }
-  }
 })

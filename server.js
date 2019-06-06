@@ -2,6 +2,8 @@
 //a package in node is something someone else has written that you can reuse like a library in Python
 //this line runs the .config() function which get the config from a file with filename .env
 require('dotenv').config();
+//as it happens we are using the google's way of authenticating so we don't need this
+//however I'm leaving it here in case we need it later
 
 //this gets a package which allows the running of a server
 const express = require("express")
@@ -33,18 +35,6 @@ else {
   VCAP_SERVICES = false
 }
 
-//Run this in command line first
-//export GOOGLE_APPLICATION_CREDENTIALS="service.json"
-
-/*
-//this will need to change to be google
-var assistant = new watson.AssistantV1({
-  iam_apikey: wa_api_key,
-  url: "https://gateway-lon.watsonplatform.net/assistant/api",
-  version: "2018-09-20"
-});
-*/
-
 //this says that we can use some additional pages to display info that our app can then get
 //e.g. you want to do an API call to google to ask google what text is in an image?
 //well you front end html/css/js (front end) can't do that, it's just not designed to do that, it can do much smaller API requests though
@@ -59,41 +49,31 @@ router.use(bodyParser.json());
 
 //this is where we say which webpage the front end will try to get data from and what to do if the front end requests it.
 //this is where you need to tell the server to do an API call
-/*
-router.post('/conversation', (req, res) => {
-   const input = req.body;
-   console.log("attempting call to watson assistant")
-   //console.log(input)
-   assistant.message({workspace_id: process.env.ASSISTANT_WORKSPACE, input: {'text': input.question}, context: input.context}, (err, result) => {
-     if (!err && result.output.text) {
-       console.log(result.context);
-       res.status(200).send({"output": result.output.text, "context": result.context})
-     } else {
-       res.status(500).send(err)
-     }
-   })
- });
-*/
 
+//we are going to hard code the image that we're going to detect text on
 const fileName = 'image.jpg';
 
-// Read a local image as a text document
-router.post('/detect', function(req, res) {
-  client
-  .documentTextDetection(fileName)
-  .then (function (results) {
-    console.log(result.fullTextAnnotation.text)
-    res.status(200).send("It's done")
-  })
-  .catch(function (err) {
-    console.log(err)
-    res.status(400).send("error")
-  })
-  /*
+// This says what the code should do if anyone (or your app) tries to go to your-web-address/detect
+router.get('/detect', async function(req, res) {
+  //because there's a chance that google won't work we say to only try it
+  //if we didn't do that and the request for info from google failed then the whole app would stop working
+  try {
+  // we say to await a response from the google service with the info about the picture
+  // this is because this request for info is "asynchronous"
+  //normally code goes through each line in turn but for asynchronous calls the code moves onto the next line before the request from google is received
   const [result] = await client.documentTextDetection(fileName);
+  //we get a whole lot of information from google and we only need the full text annotation
   const fullTextAnnotation = result.fullTextAnnotation;
+  //print it in the console just to check it
   console.log(`Full text: ${fullTextAnnotation.text}`);
-  */
+  //this sends it to the front end
+  res.json(fullTextAnnotation.text)
+  }
+  //if google doesn't send a good response back we have an error and we send an error to the front end instead
+  catch (error) {
+    console.log(error.message)
+    res.status(500).send()
+  }
 })
 
 
