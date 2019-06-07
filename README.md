@@ -128,7 +128,7 @@ Rename the file to something easy to remember like `service-key.json`
 
 There are a bunch of packages (other people's code) which the application uses to make creating the app easier. You will need to install them to your computer to be able to run the application.
 
-In your terminal/command line make sure that you are currently in this folder then run the command:
+In your terminal/command line make sure that you are currently in this folder. Have a look at the instructions about changing directory in the Option B Cloning the repository section of these instructions. Then run the command:
 
 ```
 npm install
