@@ -98,7 +98,17 @@ In your terminal/command line check if you have "Node version manager" or nvm in
 nvm ls
 ```
 
-If it responds with a lot of numbers then skip the next step. If it says that nvm isn't recognised then you will need to install Node and npm from this [website](https://nodejs.org/en/download/)
+If it responds with a lot of numbers then skip to Step 3.
+
+Otherwise (if it says that nvm is not recognised) then try:
+
+```
+node --version
+```
+
+If it responds with a number then skip to Step 3
+
+If it says that node isn't recognised then you will need to install Node and npm from this [website](https://nodejs.org/en/download/)
 
 ### 3. Set up Google Services
 
@@ -141,10 +151,18 @@ You are now ready to run your application.
 
 ## How to run the application
 
-In your terminal/command line navigate to this folder. Then run the command:
+In your terminal/command line navigate to this folder.
+
+If you are on a Mac then run:
 
 ```
 export GOOGLE_APPLICATION_CREDENTIALS="service-key.json"
+```
+
+If you are on a Windows machine then run:
+
+```
+set GOOGLE_APPLICATION_CREDENTIALS=service-key.json
 ```
 
 This is to tell your application the google credentials (like a password) needed to connect to the Google Vision API.
