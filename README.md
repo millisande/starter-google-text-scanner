@@ -25,6 +25,8 @@ All the rest of the files are system files which are used to do set up or to pro
 
 ## How to set up the application so it will work on my computer
 
+This is a step by step guide from scratch for how to run this application. If you are setting up this app on a Windows device you can also follow along with the instructions [in this YouTube video](https://www.youtube.com/watch?v=DltlsDjJqCI)
+
 - 1 Download this repository of code (repo)
 - 2 Install npm and Node
 - 3 Set up Google Services
